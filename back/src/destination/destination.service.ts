@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
+import { yesOrNoToBoolean } from 'src/utils';
 import * as xlsx from 'xlsx';
+import { DestinationDto } from './dto/destination.dto';
 
 @Injectable()
 export class DestinationService {
-    importDestinationsList(workbook: xlsx.WorkBook) {
-          
+    constructor(private prisma: PrismaService) {}
+
+    async importDestinationsList(workbook: xlsx.WorkBook) {
         const destinationSheetName = "Destinations";
         const destinationsSheet = workbook.Sheets[destinationSheetName];
 
@@ -14,17 +18,15 @@ export class DestinationService {
   
         const parsedDestinationsSheet = xlsx.utils.sheet_to_json(destinationsSheet);
 
-        console.log(parsedDestinationsSheet)
-
         const destinationsList: {
             name                     : string;
-            in_france                : boolean;
-            access_to_mountain       : boolean;
-            access_to_sea:            boolean;
-            access_to_lake           : boolean;
-            party                    : boolean;
-            historic                 : boolean;
-            wine                     : boolean;
+            is_in_france                : boolean;
+            has_access_to_mountain       : boolean;
+            has_access_to_sea            : boolean;
+            has_access_to_lake           : boolean;
+            has_party                    : boolean;
+            is_historic_place                 : boolean;
+            is_wine_region                     : boolean;
             first_privileged_season  : string;
             second_privileged_season : string;
         }[] = [];
@@ -40,24 +42,34 @@ export class DestinationService {
             && destinationRow["Région viticole ?"]
             && destinationRow["Saison privilégiée 1"] 
             && destinationRow["Saison privilégiée 2"]
-          ) {
-            			
-            console.log(destinationRow['Villes'], ' is extracted and it is in', 'France / Étranger ?');
+          ) {            			
               destinationsList.push({
               name: destinationRow['Villes'],
-              in_france: destinationRow['France ?'],
-              access_to_sea: destinationRow['Accès à la mer ?'], 
-              access_to_mountain: destinationRow["Accès à la montagne ?"],
-              access_to_lake: destinationRow["Accès à un lac ?"],
-              party                    : destinationRow["Teuf ?"],
-              historic                 : destinationRow["Ville historique ?"],
-              wine                     : destinationRow["Région viticole ?"],
+              is_in_france: yesOrNoToBoolean(destinationRow['France ?']),
+              has_access_to_sea: yesOrNoToBoolean(destinationRow['Accès à la mer ?']), 
+              has_access_to_mountain: yesOrNoToBoolean(destinationRow["Accès à la montagne ?"]),
+              has_access_to_lake: yesOrNoToBoolean(destinationRow["Accès à un lac ?"]),
+              has_party                    : yesOrNoToBoolean(destinationRow["Teuf ?"]),
+              is_historic_place                 : yesOrNoToBoolean(destinationRow["Ville historique ?"]),
+              is_wine_region                     : yesOrNoToBoolean(destinationRow["Région viticole ?"]),
               first_privileged_season  : destinationRow["Saison privilégiée 1"],
               second_privileged_season : destinationRow["Saison privilégiée 2"]
             });  
           }
         }
-        console.log(destinationsList, ' is the list')
-        return 'les villes ont été créées ! Rendez-vous sur l\'app pour tester';
+        
+         const createdDestinatations = await this.prisma.destination.createManyAndReturn({
+          data: destinationsList
+        });
+
+        return createdDestinatations
+    }
+
+    async getDestinationFromCriterion(args: {
+      destinationQuery: any;
+    }) {
+      return await this.prisma.destination.findFirst({
+        where: { ...args.destinationQuery }
+      })
     }
 }

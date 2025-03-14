@@ -1,25 +1,23 @@
 import FormButton from "../FormButton/FormButton";
-import frenchFlag from "../../../public/frenchFlag.png";
-import mapImage from "../../../public/map.png";
+import frenchFlag from "../../../public/french_flag.png";
+import { Dispatch, SetStateAction } from "react";
 
 export const CountryForm = (props: {
-  setTravelCountry: React.Dispatch<
-    React.SetStateAction<"france" | "abroad" | undefined>
-  >;
+  setIsInFrance: Dispatch<SetStateAction<boolean | undefined>>;
 }) => {
   return (
     <>
       <FormButton
-        onClick={() => props.setTravelCountry("france")}
+        onClick={() => props.setIsInFrance(true)}
         text="En France"
         alt="french-flag"
         src={frenchFlag}
       />
       <FormButton
-        onClick={() => props.setTravelCountry("abroad")}
+        onClick={() => props.setIsInFrance(false)}
         text="A l'étranger"
         alt="map-image"
-        src={mapImage}
+        src={frenchFlag}
       />
     </>
   );

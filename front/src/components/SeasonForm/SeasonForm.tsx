@@ -1,6 +1,5 @@
 import FormButton from "../FormButton/FormButton";
-import frenchFlag from "../../../public/frenchFlag.png";
-import mapImage from "../../../public/map.png";
+import frenchFlag from "../../../public/french_flag.png";
 
 export const SeasonForm = (props: {
   setTravelSeason: React.Dispatch<
@@ -21,7 +20,7 @@ export const SeasonForm = (props: {
         onClick={() => props.setTravelSeason("autumn")}
         text="Automne"
         alt="autumn"
-        src={mapImage}
+        src={frenchFlag}
       />
       <FormButton
         onClick={() => props.setTravelSeason("winter")}
@@ -33,7 +32,7 @@ export const SeasonForm = (props: {
         onClick={() => props.setTravelSeason("spring")}
         text="Printemps"
         alt="spring"
-        src={mapImage}
+        src={frenchFlag}
       />
     </>
   );
