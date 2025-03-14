@@ -5,30 +5,27 @@ import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
 import { Button } from "@mui/material";
 import axios from "axios";
+import { SeasonType } from "@/types/types";
+import { getDestinationFromCriterionApiCall } from "@/src/helpers/destination.helper";
 
 export const MainForm = () => {
   const [isInFrance, setIsInFrance] = useState<boolean>();
-  const [travelSeason, setTravelSeason] = useState<
-    "spring" | "summer" | "autumn" | "winter" | "flex"
-  >();
+  const [travelSeason, setTravelSeason] = useState<SeasonType>();
   const [travelDetails, setTravelDetails] = useState<string[]>([]);
 
   const [destinationResult, setDestinationResult] = useState();
 
   const getDestinationFromCriterion = async () => {
-    const res = await axios({
-      url: "http://localhost:8080/destination/get-destination-from-criterion",
-      method: "post",
-      data: {
-        is_in_france: isInFrance,
-        season: travelSeason,
+    if (isInFrance !== undefined && travelSeason && travelDetails) {
+      const res = await getDestinationFromCriterionApiCall({
+        isInFrance,
+        travelSeason,
         travelDetails,
-      },
-    });
+      });
 
-    if (res.data) {
-      console.log(res.data, " is the data ??");
-      setDestinationResult(res.data);
+      if (res.data) {
+        setDestinationResult(res.data);
+      }
     }
   };
 

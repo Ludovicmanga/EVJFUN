@@ -14,15 +14,15 @@ datasource db {
 }
 
 model Destination {
-  id                       Int     @id @default(autoincrement())
-  name                     String  @unique
-  is_in_france             Boolean
-  has_access_to_mountain   Boolean
-  has_access_to_sea        Boolean
-  has_access_to_lake       Boolean
-  has_party                Boolean
-  is_historic_place        Boolean
-  is_wine_region           Boolean
-  first_privileged_season  String
-  second_privileged_season String
+  id                     Int     @id @default(autoincrement())
+  name                   String  @unique
+  isInFrance             Boolean
+  hasAccessToMountain    Boolean
+  hasAccessToSea         Boolean
+  hasAccessToLake        Boolean
+  hasParty               Boolean
+  isHistoricPlace        Boolean
+  isWineRegion           Boolean
+  firstPrivilegedSeason  String
+  secondPrivilegedSeason String
 }

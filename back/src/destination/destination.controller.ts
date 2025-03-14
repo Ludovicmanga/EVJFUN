@@ -3,8 +3,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import * as xlsx from 'xlsx';
 import { DestinationService } from './destination.service';
-import { getDestinationQuery } from 'src/utils';
 import { Destination } from '@prisma/client';
+import { getDestinationQuery } from './helpers/destination.helper';
 
 @Controller('destination')
 export class DestinationController {
@@ -13,17 +13,16 @@ export class DestinationController {
     @Post('get-destination-from-criterion')
     async getDestination(@Req() req, @Res() res) {
         const {
-            is_in_france,
-            season,
-            travelDetails
-
+          isInFrance,
+          travelSeason,
+          travelDetails,
         } = req.body;
 
-        const destinationQuery = getDestinationQuery(is_in_france, season, travelDetails);
+        const destinationQuery = getDestinationQuery(isInFrance, travelSeason, travelDetails);
 
-        const destinationFoundResponse = await this.destinationService.getDestinationFromCriterion({
+        const destinationFoundResponse = await this.destinationService.getDestinationFromCriterion(
             destinationQuery,
-        });
+        );
         
         let destinationFound;
 

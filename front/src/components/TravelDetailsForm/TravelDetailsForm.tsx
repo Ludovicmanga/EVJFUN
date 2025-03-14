@@ -20,56 +20,54 @@ export const TravelDetailsForm = (props: {
   return (
     <>
       <FormButton
-        disabled={disableIfMaxDetailsCriterionAndElementClicked("has_party")}
+        disabled={disableIfMaxDetailsCriterionAndElementClicked("hasParty")}
         text="Une ville où faire la fête"
         alt="party"
         src={frenchFlag}
-        onClick={() => addOrRemoveElement("has_party")}
+        onClick={() => addOrRemoveElement("hasParty")}
       />
       <FormButton
         disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "is_historic_place"
+          "isHistoricPlace"
         )}
         text="Une ville historique à visiter"
         alt="monument"
         src={frenchFlag}
-        onClick={() => addOrRemoveElement("is_historic_place")}
+        onClick={() => addOrRemoveElement("isHistoricPlace")}
       />
       <FormButton
         disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "has_access_to_sea"
+          "hasAccessToSea"
         )}
         text="Une proximité avec la mer"
         alt="sea"
         src={frenchFlag}
-        onClick={() => addOrRemoveElement("has_access_to_sea")}
+        onClick={() => addOrRemoveElement("hasAccessToSea")}
       />
       <FormButton
         disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "has_access_to_mountain"
+          "hasAccessToMountain"
         )}
         text="Un lieu près de la montagne"
         alt="mountain"
         src={frenchFlag}
-        onClick={() => addOrRemoveElement("has_access_to_mountain")}
+        onClick={() => addOrRemoveElement("hasAccessToMountain")}
       />
       <FormButton
         disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "has_access_to_lake"
+          "hasAccessToLake"
         )}
         text="Une proximité avec un lac"
         alt="fish"
         src={frenchFlag}
-        onClick={() => addOrRemoveElement("has_access_to_lake")}
+        onClick={() => addOrRemoveElement("hasAccessToLake")}
       />
       <FormButton
-        disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "is_wine_region"
-        )}
+        disabled={disableIfMaxDetailsCriterionAndElementClicked("isWineRegion")}
         text="Une région viticole"
         alt="wine-glass"
         src={frenchFlag}
-        onClick={() => addOrRemoveElement("is_wine_region")}
+        onClick={() => addOrRemoveElement("isWineRegion")}
       />
     </>
   );

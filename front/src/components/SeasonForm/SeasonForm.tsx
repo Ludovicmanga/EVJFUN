@@ -1,12 +1,9 @@
 import FormButton from "../FormButton/FormButton";
 import frenchFlag from "../../../public/french_flag.png";
+import { SeasonType } from "@/types/types";
 
 export const SeasonForm = (props: {
-  setTravelSeason: React.Dispatch<
-    React.SetStateAction<
-      "spring" | "summer" | "autumn" | "winter" | "flex" | undefined
-    >
-  >;
+  setTravelSeason: React.Dispatch<React.SetStateAction<SeasonType | undefined>>;
 }) => {
   return (
     <>
@@ -32,6 +29,12 @@ export const SeasonForm = (props: {
         onClick={() => props.setTravelSeason("spring")}
         text="Printemps"
         alt="spring"
+        src={frenchFlag}
+      />
+      <FormButton
+        onClick={() => props.setTravelSeason("flex")}
+        text="On est flex"
+        alt="flex"
         src={frenchFlag}
       />
     </>

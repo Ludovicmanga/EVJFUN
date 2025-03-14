@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import { yesOrNoToBoolean } from 'src/utils';
 import * as xlsx from 'xlsx';
 import { DestinationDto } from './dto/destination.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class DestinationService {
@@ -20,15 +21,15 @@ export class DestinationService {
 
         const destinationsList: {
             name                     : string;
-            is_in_france                : boolean;
-            has_access_to_mountain       : boolean;
-            has_access_to_sea            : boolean;
-            has_access_to_lake           : boolean;
-            has_party                    : boolean;
-            is_historic_place                 : boolean;
-            is_wine_region                     : boolean;
-            first_privileged_season  : string;
-            second_privileged_season : string;
+            isInFrance                : boolean;
+            hasAccessToMountain       : boolean;
+            hasAccessToSea            : boolean;
+            hasAccessToLake           : boolean;
+            hasParty                    : boolean;
+            isHistoricPlace                 : boolean;
+            isWineRegion                     : boolean;
+            firstPrivilegedSeason  : string;
+            secondPrivilegedSeason : string;
         }[] = [];
   
         for (const destinationRow of parsedDestinationsSheet) {
@@ -45,15 +46,15 @@ export class DestinationService {
           ) {            			
               destinationsList.push({
               name: destinationRow['Villes'],
-              is_in_france: yesOrNoToBoolean(destinationRow['France ?']),
-              has_access_to_sea: yesOrNoToBoolean(destinationRow['Accès à la mer ?']), 
-              has_access_to_mountain: yesOrNoToBoolean(destinationRow["Accès à la montagne ?"]),
-              has_access_to_lake: yesOrNoToBoolean(destinationRow["Accès à un lac ?"]),
-              has_party                    : yesOrNoToBoolean(destinationRow["Teuf ?"]),
-              is_historic_place                 : yesOrNoToBoolean(destinationRow["Ville historique ?"]),
-              is_wine_region                     : yesOrNoToBoolean(destinationRow["Région viticole ?"]),
-              first_privileged_season  : destinationRow["Saison privilégiée 1"],
-              second_privileged_season : destinationRow["Saison privilégiée 2"]
+              isInFrance: yesOrNoToBoolean(destinationRow['France ?']),
+              hasAccessToSea: yesOrNoToBoolean(destinationRow['Accès à la mer ?']), 
+              hasAccessToMountain: yesOrNoToBoolean(destinationRow["Accès à la montagne ?"]),
+              hasAccessToLake: yesOrNoToBoolean(destinationRow["Accès à un lac ?"]),
+              hasParty                    : yesOrNoToBoolean(destinationRow["Teuf ?"]),
+              isHistoricPlace                 : yesOrNoToBoolean(destinationRow["Ville historique ?"]),
+              isWineRegion                     : yesOrNoToBoolean(destinationRow["Région viticole ?"]),
+              firstPrivilegedSeason  : destinationRow["Saison privilégiée 1"],
+              secondPrivilegedSeason : destinationRow["Saison privilégiée 2"]
             });  
           }
         }
@@ -65,11 +66,9 @@ export class DestinationService {
         return createdDestinatations
     }
 
-    async getDestinationFromCriterion(args: {
-      destinationQuery: any;
-    }) {
+    async getDestinationFromCriterion(destinationQuery: Prisma.DestinationWhereInput) {
       return await this.prisma.destination.findFirst({
-        where: { ...args.destinationQuery }
+        where: destinationQuery
       })
     }
 }

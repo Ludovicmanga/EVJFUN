@@ -1,0 +1,16 @@
+import { SeasonType } from "@/types/types";
+import axios from "axios";
+
+export const getDestinationFromCriterionApiCall =  async(args: {
+    isInFrance: boolean,
+    travelSeason: SeasonType,
+    travelDetails: string[],
+  }) => {
+    return await axios({
+        url: "http://localhost:8080/destination/get-destination-from-criterion",
+        method: "post",
+        data: {
+          ...args
+        },
+      });
+}
