@@ -16,6 +16,7 @@ import { getDestinationFromCriterionApiCall } from "@/src/helpers/destination.he
 import styles from "./MainForm.module.css";
 import { useRouter } from "next/navigation";
 import { AutoAwesome, AutoFixHigh, Navigation } from "@mui/icons-material";
+import tinycolor from "tinycolor2";
 
 export const MainForm = (props: {
   setDestinationResult: Dispatch<SetStateAction<string | undefined>>;
@@ -78,6 +79,9 @@ export const MainForm = (props: {
               mt: 4,
               mb: 2,
               background: "#F79D6F",
+              ":hover": {
+                background: tinycolor("#F79D6F").darken(5).toString(),
+              },
             }}
           >
             <AutoAwesome sx={{ mr: 1 }} />
