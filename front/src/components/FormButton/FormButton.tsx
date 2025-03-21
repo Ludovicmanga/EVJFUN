@@ -37,6 +37,7 @@ export default function FormButton(props: {
           : "0px 2px 5px rgba(0, 0, 0, 0.1)",
         display: "flex",
         justifyContent: "start",
+        height: "3rem",
       }}
     >
       <div

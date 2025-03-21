@@ -6,12 +6,22 @@ import Image from "next/image";
 import { Button } from "@mui/material";
 import cocoImg from "../../../public/coco.png";
 import { useRouter } from "next/navigation";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useRef } from "react";
 import { goToHomePage } from "@/src/utils/utils";
 
 export default function ResultDisplay(props: { destinationName: string }) {
   const aDestinationWasFound = props.destinationName !== "NO_DESTINATION_FOUND";
-  const router = useRouter();
+  const btnRefToDisplayRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleScrollToBottom = () => {
+    if (btnRefToDisplayRef.current) {
+      btnRefToDisplayRef.current.scrollIntoView();
+    }
+  };
+
+  useEffect(() => {
+    handleScrollToBottom();
+  }, [btnRefToDisplayRef.current]);
 
   const handleGoToGuidePage = () => {
     window.open(
@@ -47,6 +57,7 @@ export default function ResultDisplay(props: { destinationName: string }) {
           sx={{
             background: "#DE8D63",
           }}
+          ref={btnRefToDisplayRef}
         >
           {aDestinationWasFound
             ? `Voir notre guide pour ${props.destinationName}`

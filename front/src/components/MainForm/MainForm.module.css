@@ -1,7 +1,12 @@
+.container {
+  width: 25rem;
+}
+
 .title {
   font-size: 1.2rem;
   margin: 0 0 1.5rem 0;
 }
+
 .buttonsContainer {
   display: flex;
   flex-direction: column;
