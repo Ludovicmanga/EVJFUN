@@ -9,6 +9,8 @@ import { goToHomePage } from "@/src/utils/utils";
 
 const poppins = Poppins({
   weight: "400",
+  subsets: ["latin"], // ✅ Specify a subset
+  preload: true,
 });
 
 export const metadata: Metadata = {
