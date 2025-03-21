@@ -5,7 +5,6 @@ import Image from "next/image";
 import logo from "../public/logo.png";
 import styles from "./layout.module.css";
 import PermanentDrawerLeft from "@/src/components/Sidebar/Sidebar";
-import { goToHomePage } from "@/src/utils/utils";
 
 const poppins = Poppins({
   weight: "400",
