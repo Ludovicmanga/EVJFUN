@@ -16,5 +16,8 @@
     "url": "https://github.com/Ludovicmanga/EVJFUN/issues"
   },
   "homepage": "https://github.com/Ludovicmanga/EVJFUN#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.13.11"
+  }
 }
