@@ -1,19 +1,22 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
-import { Button } from "@mui/material";
-import axios from "axios";
+import { Button, Fab } from "@mui/material";
 import { SeasonType } from "@/types/types";
 import { getDestinationFromCriterionApiCall } from "@/src/helpers/destination.helper";
+import styles from "./MainForm.module.css";
+import { useRouter } from "next/navigation";
+import { AutoAwesome, AutoFixHigh, Navigation } from "@mui/icons-material";
 
-export const MainForm = () => {
+export const MainForm = (props: {
+  setDestinationResult: Dispatch<SetStateAction<string | undefined>>;
+  destinationResult: string | undefined;
+}) => {
   const [isInFrance, setIsInFrance] = useState<boolean>();
   const [travelSeason, setTravelSeason] = useState<SeasonType>();
   const [travelDetails, setTravelDetails] = useState<string[]>([]);
-
-  const [destinationResult, setDestinationResult] = useState();
 
   const getDestinationFromCriterion = async () => {
     if (isInFrance !== undefined && travelSeason && travelDetails) {
@@ -24,48 +27,47 @@ export const MainForm = () => {
       });
 
       if (res.data) {
-        setDestinationResult(res.data);
+        props.setDestinationResult(res.data);
       }
     }
   };
 
   return (
-    <>
-      {destinationResult && destinationResult !== "NO_DESTINATION_FOUND" ? (
-        <div>{destinationResult} est la déstination qu'on te propose !</div>
-      ) : destinationResult === "NO_DESTINATION_FOUND" ? (
-        <div>
-          Nous n'avons pas trouvé de destination pour ta recherche, essaye
-          encore !
-        </div>
-      ) : (
-        <div>
-          <h1>
-            {isInFrance === undefined
-              ? "Je recherche une destination..."
-              : travelSeason === undefined
-              ? "Nous partons en..."
-              : "Je recherche..."}
-          </h1>
-          <div>
-            {isInFrance === undefined ? (
-              <CountryForm setIsInFrance={setIsInFrance} />
-            ) : travelSeason === undefined ? (
-              <SeasonForm setTravelSeason={setTravelSeason} />
-            ) : (
-              <TravelDetailsForm
-                travelDetails={travelDetails}
-                setTravelDetails={setTravelDetails}
-              />
-            )}
-          </div>
-          {travelDetails.length > 0 && (
-            <Button onClick={getDestinationFromCriterion} variant="contained">
-              Valider
-            </Button>
-          )}
-        </div>
+    <div>
+      <h1 className={styles.title}>
+        {isInFrance === undefined
+          ? "Je recherche une destination..."
+          : travelSeason === undefined
+          ? "Nous partons en..."
+          : "Je recherche... (max 2)"}
+      </h1>
+      <div className={styles.buttonsContainer}>
+        {isInFrance === undefined ? (
+          <CountryForm setIsInFrance={setIsInFrance} />
+        ) : travelSeason === undefined ? (
+          <SeasonForm setTravelSeason={setTravelSeason} />
+        ) : (
+          <TravelDetailsForm
+            travelDetails={travelDetails}
+            setTravelDetails={setTravelDetails}
+          />
+        )}
+      </div>
+      {travelDetails.length > 0 && (
+        <Fab
+          variant="extended"
+          color="primary"
+          onClick={getDestinationFromCriterion}
+          sx={{
+            mt: 4,
+            mb: 2,
+            background: "#F79D6F",
+          }}
+        >
+          <AutoAwesome sx={{ mr: 1 }} />
+          Valider ma recherche
+        </Fab>
       )}
-    </>
+    </div>
   );
 };

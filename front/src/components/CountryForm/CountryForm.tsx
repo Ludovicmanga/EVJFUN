@@ -1,5 +1,6 @@
 import FormButton from "../FormButton/FormButton";
 import frenchFlag from "../../../public/french_flag.png";
+import abroadIcon from "../../../public/airplane.png";
 import { Dispatch, SetStateAction } from "react";
 
 export const CountryForm = (props: {
@@ -10,14 +11,20 @@ export const CountryForm = (props: {
       <FormButton
         onClick={() => props.setIsInFrance(true)}
         text="En France"
-        alt="french-flag"
-        src={frenchFlag}
+        icon={{
+          src: frenchFlag,
+          height: 20,
+          alt: "french-flag",
+        }}
       />
       <FormButton
         onClick={() => props.setIsInFrance(false)}
         text="A l'étranger"
-        alt="map-image"
-        src={frenchFlag}
+        icon={{
+          src: abroadIcon,
+          height: 30,
+          alt: "abroad",
+        }}
       />
     </>
   );

@@ -1,15 +1,21 @@
-import React from "react";
-import Image from "next/image";
-import logo from "../public/logo.png";
+"use client";
+import React, { useState } from "react";
 import { MainForm } from "@/src/components/MainForm/MainForm";
+import ResultDisplay from "@/src/components/ResultDisplay/ResultDisplay";
 
 export default function HomePage() {
+  const [destinationResult, setDestinationResult] = useState<string>();
+
   return (
     <div>
-      <div>
-        <Image height={300} alt="logo" src={logo} />
-      </div>
-      <MainForm />
+      {destinationResult ? (
+        <ResultDisplay destinationName={destinationResult} />
+      ) : (
+        <MainForm
+          destinationResult={destinationResult}
+          setDestinationResult={setDestinationResult}
+        />
+      )}
     </div>
   );
 }
