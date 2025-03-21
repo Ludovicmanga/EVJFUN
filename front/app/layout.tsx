@@ -4,8 +4,9 @@ import "./globals.css";
 import Image from "next/image";
 import logo from "../public/logo.png";
 import styles from "./layout.module.css";
-import { Paper } from "@mui/material";
+import { Paper, useMediaQuery } from "@mui/material";
 import tinycolor from "tinycolor2";
+import cocoImg from "../public/coco.png";
 
 const poppins = Poppins({
   weight: "400",
@@ -30,13 +31,19 @@ export default function RootLayout({
           <Paper
             sx={{
               background: tinycolor("DE8D63").lighten(7).toString(),
-              margin: "0.5rem 1rem",
+              margin: "1rem",
             }}
             className={styles.contentContainer}
           >
             <Image className={styles.logo} height={250} alt="logo" src={logo} />
             {children}
           </Paper>
+          <Image
+            alt="coco"
+            src={cocoImg}
+            height={200}
+            className={styles.cocoImg}
+          />
         </div>
       </body>
     </html>
