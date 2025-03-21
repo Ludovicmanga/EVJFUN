@@ -6,8 +6,9 @@ export const getDestinationFromCriterionApiCall =  async(args: {
     travelSeason: SeasonType,
     travelDetails: string[],
   }) => {
+    console.log(process.env.NEXT_PUBLIC_BACKEND_URL, ' is the url')
     return await axios({
-        url: "http://localhost:8080/destination/get-destination-from-criterion",
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/destination/get-destination-from-criterion`,
         method: "post",
         data: {
           ...args
