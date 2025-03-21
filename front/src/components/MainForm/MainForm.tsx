@@ -1,5 +1,12 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  use,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
@@ -18,6 +25,14 @@ export const MainForm = (props: {
   const [travelSeason, setTravelSeason] = useState<SeasonType>();
   const [travelDetails, setTravelDetails] = useState<string[]>([]);
 
+  const validateMessageDiv = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (travelDetails.length === 2 && validateMessageDiv.current) {
+      validateMessageDiv.current.scrollIntoView();
+    }
+  }, [travelDetails.length]);
+
   const getDestinationFromCriterion = async () => {
     if (isInFrance !== undefined && travelSeason && travelDetails) {
       const res = await getDestinationFromCriterionApiCall({
@@ -33,7 +48,7 @@ export const MainForm = (props: {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1 className={styles.title}>
         {isInFrance === undefined
           ? "Je recherche une destination..."
@@ -54,19 +69,21 @@ export const MainForm = (props: {
         )}
       </div>
       {travelDetails.length > 0 && (
-        <Fab
-          variant="extended"
-          color="primary"
-          onClick={getDestinationFromCriterion}
-          sx={{
-            mt: 4,
-            mb: 2,
-            background: "#F79D6F",
-          }}
-        >
-          <AutoAwesome sx={{ mr: 1 }} />
-          Valider ma recherche
-        </Fab>
+        <div ref={validateMessageDiv}>
+          <Fab
+            variant="extended"
+            color="primary"
+            onClick={getDestinationFromCriterion}
+            sx={{
+              mt: 4,
+              mb: 2,
+              background: "#F79D6F",
+            }}
+          >
+            <AutoAwesome sx={{ mr: 1 }} />
+            Valider ma recherche
+          </Fab>
+        </div>
       )}
     </div>
   );
