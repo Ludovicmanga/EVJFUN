@@ -14,3 +14,17 @@ export const getDestinationFromCriterionApiCall =  async(args: {
         },
       });
 }
+
+export const getCriterionWithMatchingDestinationApiCall = async(args: {
+    isInFrance: boolean | undefined,
+    travelSeason: SeasonType | undefined,
+    travelDetails: string[],
+  }) => {
+    return await axios({
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/destination/get-criteron-with-matching-destination`,
+        method: "post",
+        data: {
+          ...args
+        },
+      });
+}

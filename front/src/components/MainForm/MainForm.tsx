@@ -1,21 +1,16 @@
 "use client";
-import {
-  Dispatch,
-  SetStateAction,
-  use,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
-import { Button, Fab } from "@mui/material";
+import { Fab } from "@mui/material";
 import { SeasonType } from "@/types/types";
-import { getDestinationFromCriterionApiCall } from "@/src/helpers/destination.helper";
+import {
+  getCriterionWithMatchingDestinationApiCall,
+  getDestinationFromCriterionApiCall,
+} from "@/src/helpers/destination.helper";
 import styles from "./MainForm.module.css";
-import { useRouter } from "next/navigation";
-import { AutoAwesome, AutoFixHigh, Navigation } from "@mui/icons-material";
+import { AutoAwesome } from "@mui/icons-material";
 import tinycolor from "tinycolor2";
 
 export const MainForm = (props: {
@@ -27,6 +22,18 @@ export const MainForm = (props: {
   const [travelDetails, setTravelDetails] = useState<string[]>([]);
 
   const validateMessageDiv = useRef<HTMLDivElement | null>(null);
+
+  const handleGetCriterionWithMatchingDestination = async () => {
+    const res = await getCriterionWithMatchingDestinationApiCall({
+      isInFrance,
+      travelSeason,
+      travelDetails,
+    });
+  };
+
+  useEffect(() => {
+    handleGetCriterionWithMatchingDestination();
+  }, [isInFrance, travelSeason, travelDetails]);
 
   useEffect(() => {
     if (travelDetails.length === 2 && validateMessageDiv.current) {
