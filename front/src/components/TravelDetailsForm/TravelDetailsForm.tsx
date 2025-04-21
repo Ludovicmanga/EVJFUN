@@ -5,12 +5,14 @@ import lakeIcon from "../../../public/lake.png";
 import historicIcon from "../../../public/historic.png";
 import mountainIcon from "../../../public/mountain.png";
 import wineIcon from "../../../public/wine.png";
+import { CriterionsWithMatchingDestinationsType } from "@/types/types";
 
 export const TravelDetailsForm = (props: {
   setTravelDetails: React.Dispatch<React.SetStateAction<string[]>>;
   travelDetails: string[];
+  criterionsWithMatchingDestinations: CriterionsWithMatchingDestinationsType;
 }) => {
-  const disableIfMaxDetailsCriterionAndElementClicked = (id: string) => {
+  const maxDetailsCriterionAndElementClicked = (id: string) => {
     return props.travelDetails.length > 1 && !props.travelDetails.includes(id);
   };
 
@@ -24,10 +26,20 @@ export const TravelDetailsForm = (props: {
 
   const isClicked = (id: string) => props.travelDetails.includes(id);
 
+  const btnIsDisabled = (
+    id: keyof CriterionsWithMatchingDestinationsType
+  ): boolean => {
+    return (
+      props.criterionsWithMatchingDestinations[id] === false ||
+      maxDetailsCriterionAndElementClicked(id)
+    );
+  };
+
   return (
     <>
       <FormButton
-        disabled={disableIfMaxDetailsCriterionAndElementClicked("hasParty")}
+        id="hasParty"
+        disabled={btnIsDisabled("hasParty")}
         isClicked={isClicked("hasParty")}
         text="Une ville où faire la fête"
         icon={{
@@ -38,22 +50,20 @@ export const TravelDetailsForm = (props: {
         onClick={() => addOrRemoveElement("hasParty")}
       />
       <FormButton
-        disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "isHistoricPlace"
-        )}
-        isClicked={isClicked("isHistoricPlace")}
+        id="isHistoricPlace"
         text="Une ville historique à visiter"
+        onClick={() => addOrRemoveElement("isHistoricPlace")}
         icon={{
           src: historicIcon,
           height: 25,
           alt: "history",
         }}
-        onClick={() => addOrRemoveElement("isHistoricPlace")}
+        disabled={btnIsDisabled("isHistoricPlace")}
+        isClicked={isClicked("isHistoricPlace")}
       />
       <FormButton
-        disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "hasAccessToSea"
-        )}
+        id="hasAccessToSea"
+        disabled={btnIsDisabled("hasAccessToSea")}
         isClicked={isClicked("hasAccessToSea")}
         text="Une proximité avec la mer"
         icon={{
@@ -64,9 +74,8 @@ export const TravelDetailsForm = (props: {
         onClick={() => addOrRemoveElement("hasAccessToSea")}
       />
       <FormButton
-        disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "hasAccessToMountain"
-        )}
+        id="hasAccessToMountain"
+        disabled={btnIsDisabled("hasAccessToMountain")}
         isClicked={isClicked("hasAccessToMountain")}
         text="Un lieu près de la montagne"
         icon={{
@@ -77,10 +86,7 @@ export const TravelDetailsForm = (props: {
         onClick={() => addOrRemoveElement("hasAccessToMountain")}
       />
       <FormButton
-        disabled={disableIfMaxDetailsCriterionAndElementClicked(
-          "hasAccessToLake"
-        )}
-        isClicked={isClicked("hasAccessToLake")}
+        id="hasAccessToLake"
         text="Une proximité avec un lac"
         icon={{
           src: lakeIcon,
@@ -88,9 +94,12 @@ export const TravelDetailsForm = (props: {
           alt: "lake",
         }}
         onClick={() => addOrRemoveElement("hasAccessToLake")}
+        disabled={btnIsDisabled("hasAccessToLake")}
+        isClicked={isClicked("hasAccessToLake")}
       />
       <FormButton
-        disabled={disableIfMaxDetailsCriterionAndElementClicked("isWineRegion")}
+        id="isWineRegion"
+        disabled={btnIsDisabled("isWineRegion")}
         isClicked={isClicked("isWineRegion")}
         text="Une région viticole"
         icon={{

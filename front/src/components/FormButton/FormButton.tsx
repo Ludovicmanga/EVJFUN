@@ -3,15 +3,16 @@ import { StaticImageData } from "next/image";
 import Image from "next/image";
 
 export default function FormButton(props: {
+  id: string;
   text: string;
   icon: {
     alt: string;
     src: StaticImageData;
     height: number;
   };
-  disabled?: boolean;
   onClick: () => void;
   isClicked?: boolean;
+  disabled?: boolean;
 }) {
   return (
     <Button

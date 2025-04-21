@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import { yesOrNoToBoolean } from 'src/utils';
 import * as xlsx from 'xlsx';
 import { DestinationDto } from './dto/destination.dto';
-import { Prisma } from '@prisma/client';
+import { Destination, Prisma } from '@prisma/client';
 
 @Injectable()
 export class DestinationService {
@@ -71,4 +71,60 @@ export class DestinationService {
         where: destinationQuery
       })
     }
+
+    async getExistingDestinationsWithGivenCriterion(isInFrance: boolean, travelSeason: string, travelDetails: string[]) {
+      let destinations: Destination[];
+  
+      const travelDetailsConditions = travelDetails.map(detail => ({
+          [detail]: true,
+      }));
+  
+      if (travelSeason === "flex") {
+          if (travelDetails.length > 0) {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                      AND: travelDetailsConditions,
+                  },
+              });
+          } else {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                  },
+              });
+          }
+      } else {
+          if (travelDetails.length > 0 && travelSeason) {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                      OR: [
+                          { firstPrivilegedSeason: travelSeason },
+                          { secondPrivilegedSeason: travelSeason },
+                      ],
+                      AND: travelDetailsConditions,
+                  },
+              });
+          } else if (travelSeason) {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                      OR: [
+                          { firstPrivilegedSeason: travelSeason },
+                          { secondPrivilegedSeason: travelSeason },
+                      ],
+                  },
+              });
+          } else {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                  },
+              });
+          }
+      }
+  
+      return destinations;
+  }
 }

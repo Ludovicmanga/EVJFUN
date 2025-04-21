@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { SeasonType } from "src/types/types";
 
 export const getDestinationQuery = function(isInFrance: boolean, travelSeason: SeasonType, travelDetails: string[] ) {
@@ -35,3 +35,48 @@ export const getDestinationQuery = function(isInFrance: boolean, travelSeason: S
 
     return criterions;
 }
+
+export const extractCriterionsWithMatchingDestinations = (destinations: Prisma.DestinationWhereInput[]) => {
+    const result = {
+        summer: false,
+        autumn: false,
+        winter: false,
+        spring: false,
+        hasParty: false,
+        hasAccessToSea: false,
+        isHistoricPlace: false,
+        hasAccessToMountain: false,
+        hasAccessToLake: false,
+        isWineRegion: false,
+    };
+
+    destinations.forEach(destination => {
+        if (destination.firstPrivilegedSeason) {
+            result[destination.firstPrivilegedSeason as string] = true;
+        }
+        if (destination.secondPrivilegedSeason) {
+            result[destination.secondPrivilegedSeason as string] = true;
+        }
+
+        if (destination.hasParty) {
+            result.hasParty = true;
+        }
+        if (destination.hasAccessToSea) {
+            result.hasAccessToSea = true;
+        }
+        if (destination.isHistoricPlace) {
+            result.isHistoricPlace = true;
+        }
+        if (destination.hasAccessToMountain) {
+            result.hasAccessToMountain = true;
+        }
+        if (destination.hasAccessToLake) {
+            result.hasAccessToLake = true;
+        }
+        if (destination.isWineRegion) {
+            result.isWineRegion = true;
+        }
+    });
+
+    return result;
+};

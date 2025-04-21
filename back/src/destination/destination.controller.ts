@@ -3,12 +3,24 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import * as xlsx from 'xlsx';
 import { DestinationService } from './destination.service';
-import { Destination } from '@prisma/client';
-import { getDestinationQuery } from './helpers/destination.helper';
+import { extractCriterionsWithMatchingDestinations, getDestinationQuery } from './helpers/destination.helper';
 
 @Controller('destination')
 export class DestinationController {
     constructor(private destinationService: DestinationService){}
+
+    @Post('get-criteron-with-matching-destination')
+    async getExistingDestinationCriterion(@Req() req, @Res() res) {
+      const {
+        isInFrance,
+        travelSeason,
+        travelDetails,
+      } = req.body;
+
+        const destinationsFoundResponse = await this.destinationService.getExistingDestinationsWithGivenCriterion(isInFrance , travelSeason, travelDetails);
+        const criterionsWithMatchingDestinations = extractCriterionsWithMatchingDestinations(destinationsFoundResponse);
+        res.send(criterionsWithMatchingDestinations);
+    }
 
     @Post('get-destination-from-criterion')
     async getDestination(@Req() req, @Res() res) {

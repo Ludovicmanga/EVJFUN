@@ -1,21 +1,19 @@
 "use client";
-import {
-  Dispatch,
-  SetStateAction,
-  use,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
-import { Button, Fab } from "@mui/material";
-import { SeasonType } from "@/types/types";
-import { getDestinationFromCriterionApiCall } from "@/src/helpers/destination.helper";
+import { Fab } from "@mui/material";
+import {
+  CriterionsWithMatchingDestinationsType,
+  SeasonType,
+} from "@/types/types";
+import {
+  getCriterionWithMatchingDestinationApiCall,
+  getDestinationFromCriterionApiCall,
+} from "@/src/helpers/destination.helper";
 import styles from "./MainForm.module.css";
-import { useRouter } from "next/navigation";
-import { AutoAwesome, AutoFixHigh, Navigation } from "@mui/icons-material";
+import { AutoAwesome } from "@mui/icons-material";
 import tinycolor from "tinycolor2";
 
 export const MainForm = (props: {
@@ -25,8 +23,36 @@ export const MainForm = (props: {
   const [isInFrance, setIsInFrance] = useState<boolean>();
   const [travelSeason, setTravelSeason] = useState<SeasonType>();
   const [travelDetails, setTravelDetails] = useState<string[]>([]);
-
   const validateMessageDiv = useRef<HTMLDivElement | null>(null);
+  const [
+    criterionsWithMatchingDestinations,
+    setCriterionsWithMatchingDestinations,
+  ] = useState<CriterionsWithMatchingDestinationsType>({
+    summer: false,
+    autumn: false,
+    winter: false,
+    spring: false,
+    hasParty: false,
+    hasAccessToSea: false,
+    isHistoricPlace: false,
+    hasAccessToMountain: false,
+    hasAccessToLake: false,
+    isWineRegion: false,
+  });
+
+  const handleSetCriterionWithMatchingDestination = async () => {
+    const res = await getCriterionWithMatchingDestinationApiCall({
+      isInFrance,
+      travelSeason,
+      travelDetails,
+    });
+
+    setCriterionsWithMatchingDestinations(res.data);
+  };
+
+  useEffect(() => {
+    handleSetCriterionWithMatchingDestination();
+  }, [isInFrance, travelSeason, travelDetails]);
 
   useEffect(() => {
     if (travelDetails.length === 2 && validateMessageDiv.current) {
@@ -61,11 +87,19 @@ export const MainForm = (props: {
         {isInFrance === undefined ? (
           <CountryForm setIsInFrance={setIsInFrance} />
         ) : travelSeason === undefined ? (
-          <SeasonForm setTravelSeason={setTravelSeason} />
+          <SeasonForm
+            setTravelSeason={setTravelSeason}
+            criterionsWithMatchingDestinations={
+              criterionsWithMatchingDestinations
+            }
+          />
         ) : (
           <TravelDetailsForm
             travelDetails={travelDetails}
             setTravelDetails={setTravelDetails}
+            criterionsWithMatchingDestinations={
+              criterionsWithMatchingDestinations
+            }
           />
         )}
       </div>
