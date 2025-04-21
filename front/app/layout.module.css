@@ -17,11 +17,6 @@
   display: none;
 }
 
-.logo {
-  margin: 0 0 2rem 0;
-  cursor: pointer;
-}
-
 @media screen and (min-width: 40rem) {
   .contentContainer {
     width: 50%;
