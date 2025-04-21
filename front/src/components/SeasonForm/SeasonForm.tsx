@@ -12,6 +12,7 @@ import {
 export const SeasonForm = (props: {
   setTravelSeason: React.Dispatch<React.SetStateAction<SeasonType | undefined>>;
   criterionsWithMatchingDestinations: CriterionsWithMatchingDestinationsType;
+  btnsAreLoading: boolean;
 }) => {
   const btnIsDisabled = (
     id: keyof CriterionsWithMatchingDestinationsType
@@ -22,6 +23,7 @@ export const SeasonForm = (props: {
     <>
       <FormButton
         id="summer"
+        loading={props.btnsAreLoading}
         disabled={btnIsDisabled("summer")}
         onClick={() => props.setTravelSeason("summer")}
         text="Été"
@@ -33,6 +35,7 @@ export const SeasonForm = (props: {
       />
       <FormButton
         id="autumn"
+        loading={props.btnsAreLoading}
         disabled={btnIsDisabled("summer")}
         onClick={() => props.setTravelSeason("autumn")}
         text="Automne"
@@ -44,6 +47,7 @@ export const SeasonForm = (props: {
       />
       <FormButton
         id="winter"
+        loading={props.btnsAreLoading}
         disabled={btnIsDisabled("summer")}
         onClick={() => props.setTravelSeason("winter")}
         text="Hiver"
@@ -55,6 +59,7 @@ export const SeasonForm = (props: {
       />
       <FormButton
         id="spring"
+        loading={props.btnsAreLoading}
         disabled={btnIsDisabled("summer")}
         onClick={() => props.setTravelSeason("spring")}
         text="Printemps"
@@ -66,6 +71,7 @@ export const SeasonForm = (props: {
       />
       <FormButton
         id="flex"
+        loading={props.btnsAreLoading}
         onClick={() => props.setTravelSeason("flex")}
         text="On est flex"
         icon={{
