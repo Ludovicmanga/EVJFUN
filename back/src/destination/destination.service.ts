@@ -67,9 +67,16 @@ export class DestinationService {
     }
 
     async getDestinationFromCriterion(destinationQuery: Prisma.DestinationWhereInput) {
-      return await this.prisma.destination.findFirst({
-        where: destinationQuery
-      })
+      const destinations = await this.prisma.destination.findMany({
+        where: destinationQuery,
+      });
+    
+      if (destinations.length === 0) {
+        return null;
+      }
+    
+      const randomIndex = Math.floor(Math.random() * destinations.length);
+      return destinations[randomIndex];
     }
 
     async getExistingDestinationsWithGivenCriterion(isInFrance: boolean, travelSeason: string, travelDetails: string[]) {
