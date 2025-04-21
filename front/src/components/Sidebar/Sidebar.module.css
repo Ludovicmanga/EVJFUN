@@ -1,0 +1,17 @@
+.iconContainer {
+  margin: 0 1.4rem 0 0;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 1.5rem 0;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 40rem) {
+  .openSidebarBurgerButton {
+    display: none;
+  }
+}

@@ -1,0 +1,15 @@
+.container {
+  display: none;
+}
+
+@media screen and (min-width: 40rem) {
+  .container {
+    display: flex;
+    width: 310px;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+}

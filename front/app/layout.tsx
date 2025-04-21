@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
-import logo from "../public/logo.png";
 import styles from "./layout.module.css";
 import { Paper, useMediaQuery } from "@mui/material";
 import tinycolor from "tinycolor2";
-import cocoImg from "../public/coco.png";
+import Logo from "@/src/components/Logo/Logo";
+import Sidebar from "@/src/components/Sidebar/Sidebar";
 
 const poppins = Poppins({
   weight: "400",
@@ -35,15 +35,18 @@ export default function RootLayout({
             }}
             className={styles.contentContainer}
           >
-            <Image className={styles.logo} height={250} alt="logo" src={logo} />
+            <div
+              style={{
+                position: "absolute",
+                top: 18,
+                left: 13,
+              }}
+            >
+              <Sidebar />
+            </div>
+            <Logo />
             {children}
           </Paper>
-          <Image
-            alt="coco"
-            src={cocoImg}
-            height={200}
-            className={styles.cocoImg}
-          />
         </div>
       </body>
     </html>

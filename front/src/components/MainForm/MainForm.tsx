@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
-import { Fab } from "@mui/material";
+import { Fab, IconButton, Typography } from "@mui/material";
 import {
   CriterionsWithMatchingDestinationsType,
   SeasonType,
@@ -13,7 +13,7 @@ import {
   getDestinationFromCriterionApiCall,
 } from "@/src/helpers/destination.helper";
 import styles from "./MainForm.module.css";
-import { AutoAwesome } from "@mui/icons-material";
+import { ArrowBack, AutoAwesome } from "@mui/icons-material";
 import tinycolor from "tinycolor2";
 
 export const MainForm = (props: {
@@ -50,6 +50,17 @@ export const MainForm = (props: {
     setCriterionsWithMatchingDestinations(res.data);
   };
 
+  const handleBackArrowAction = () => {
+    if (travelSeason) {
+      setTravelSeason(undefined);
+      setTravelDetails([]);
+    } else if (isInFrance !== undefined) {
+      setIsInFrance(undefined);
+      setTravelSeason(undefined);
+      setTravelDetails([]);
+    }
+  };
+
   useEffect(() => {
     handleSetCriterionWithMatchingDestination();
   }, [isInFrance, travelSeason, travelDetails]);
@@ -76,13 +87,20 @@ export const MainForm = (props: {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>
-        {isInFrance === undefined
-          ? "Je recherche une destination..."
-          : travelSeason === undefined
-          ? "Nous partons en..."
-          : "Je recherche... (max 2)"}
-      </h1>
+      <div className={styles.titleContainer}>
+        <div className={styles.backButtonContainer}>
+          <IconButton onClick={handleBackArrowAction}>
+            {isInFrance !== undefined && <ArrowBack />}
+          </IconButton>
+        </div>
+        <h1 className={styles.title}>
+          {isInFrance === undefined
+            ? "Je recherche une destination..."
+            : travelSeason === undefined
+            ? "Nous partons en..."
+            : "Je recherche... (max 2)"}
+        </h1>
+      </div>
       <div className={styles.buttonsContainer}>
         {isInFrance === undefined ? (
           <CountryForm setIsInFrance={setIsInFrance} />
@@ -106,20 +124,35 @@ export const MainForm = (props: {
       {travelDetails.length > 0 && (
         <div ref={validateMessageDiv}>
           <Fab
-            variant="extended"
             color="primary"
+            variant="extended"
             onClick={getDestinationFromCriterion}
             sx={{
               mt: 4,
               mb: 2,
-              background: "#F79D6F",
+              background: tinycolor("#F79D6F").darken(5).toString(),
               ":hover": {
-                background: tinycolor("#F79D6F").darken(5).toString(),
+                background: tinycolor("#F79D6F").darken(10).toString(),
               },
             }}
           >
-            <AutoAwesome sx={{ mr: 1 }} />
-            Valider ma recherche
+            <AutoAwesome sx={{ mr: 2, color: "white" }} />
+            <Typography
+              textTransform={"uppercase"}
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              V
+            </Typography>
+            <Typography
+              textTransform={"lowercase"}
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              alider recherche
+            </Typography>
           </Fab>
         </div>
       )}
