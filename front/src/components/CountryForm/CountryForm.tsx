@@ -9,6 +9,7 @@ export const CountryForm = (props: {
   return (
     <>
       <FormButton
+        id="isInFrance"
         onClick={() => props.setIsInFrance(true)}
         text="En France"
         icon={{
@@ -18,6 +19,7 @@ export const CountryForm = (props: {
         }}
       />
       <FormButton
+        id="isInFrance"
         onClick={() => props.setIsInFrance(false)}
         text="A l'étranger"
         icon={{
