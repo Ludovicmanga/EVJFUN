@@ -3,8 +3,10 @@ import styles from "./ResultDisplay.module.css";
 import cocoHappy from "../../../public/happy_coco.webp";
 import cocoSad from "../../../public/sad_coco.webp";
 import Image from "next/image";
-import { Button } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import cocoImg from "../../../public/coco.png";
+import eyesImg from "../../../public/eyes.png";
+import refreshImg from "../../../public/refresh.png";
 import { useRouter } from "next/navigation";
 import { MouseEvent, useEffect, useRef } from "react";
 import { goToHomePage } from "@/src/utils/utils";
@@ -52,7 +54,7 @@ export default function ResultDisplay(props: { destinationName: string }) {
       <div className={styles.submitBtnContainer}>
         <Button
           onClick={aDestinationWasFound ? handleGoToGuidePage : goToHomePage}
-          startIcon={<Image alt="test" src={cocoImg} height={60}></Image>}
+          startIcon={<Image alt="test" src={eyesImg} height={30}></Image>}
           variant="contained"
           sx={{
             background: "#DE8D63",
@@ -60,8 +62,23 @@ export default function ResultDisplay(props: { destinationName: string }) {
           ref={btnRefToDisplayRef}
         >
           {aDestinationWasFound
-            ? `Voir notre guide pour ${props.destinationName}`
+            ? `Voir notre guide pour cette ville`
             : "Faire une nouvelle recherche"}
+        </Button>
+      </div>
+      <Divider variant="fullWidth">ou</Divider>
+
+      <div className={styles.submitBtnContainer}>
+        <Button
+          onClick={goToHomePage}
+          startIcon={<Image alt="test" src={refreshImg} height={30}></Image>}
+          variant="contained"
+          sx={{
+            background: "#DE8D63",
+          }}
+          ref={btnRefToDisplayRef}
+        >
+          Faire une nouvelle recherche
         </Button>
       </div>
     </div>

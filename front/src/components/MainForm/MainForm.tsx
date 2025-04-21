@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
-import { Fab } from "@mui/material";
+import { Fab, IconButton } from "@mui/material";
 import {
   CriterionsWithMatchingDestinationsType,
   SeasonType,
@@ -13,7 +13,7 @@ import {
   getDestinationFromCriterionApiCall,
 } from "@/src/helpers/destination.helper";
 import styles from "./MainForm.module.css";
-import { AutoAwesome } from "@mui/icons-material";
+import { ArrowBack, AutoAwesome } from "@mui/icons-material";
 import tinycolor from "tinycolor2";
 
 export const MainForm = (props: {
@@ -50,6 +50,17 @@ export const MainForm = (props: {
     setCriterionsWithMatchingDestinations(res.data);
   };
 
+  const handleBackArrowAction = () => {
+    if (travelSeason) {
+      setTravelSeason(undefined);
+      setTravelDetails([]);
+    } else if (isInFrance !== undefined) {
+      setIsInFrance(undefined);
+      setTravelSeason(undefined);
+      setTravelDetails([]);
+    }
+  };
+
   useEffect(() => {
     handleSetCriterionWithMatchingDestination();
   }, [isInFrance, travelSeason, travelDetails]);
@@ -76,13 +87,20 @@ export const MainForm = (props: {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>
-        {isInFrance === undefined
-          ? "Je recherche une destination..."
-          : travelSeason === undefined
-          ? "Nous partons en..."
-          : "Je recherche... (max 2)"}
-      </h1>
+      <div className={styles.titleContainer}>
+        <div className={styles.backButtonContainer}>
+          <IconButton onClick={handleBackArrowAction}>
+            {isInFrance !== undefined && <ArrowBack />}
+          </IconButton>
+        </div>
+        <h1 className={styles.title}>
+          {isInFrance === undefined
+            ? "Je recherche une destination..."
+            : travelSeason === undefined
+            ? "Nous partons en..."
+            : "Je recherche... (max 2)"}
+        </h1>
+      </div>
       <div className={styles.buttonsContainer}>
         {isInFrance === undefined ? (
           <CountryForm setIsInFrance={setIsInFrance} />
