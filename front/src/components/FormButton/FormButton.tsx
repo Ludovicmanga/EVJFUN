@@ -13,9 +13,11 @@ export default function FormButton(props: {
   onClick: () => void;
   isClicked?: boolean;
   disabled?: boolean;
+  loading: boolean;
 }) {
   return (
     <Button
+      loading={props.loading}
       disabled={props.disabled}
       variant="contained"
       onClick={props.onClick}

@@ -5,10 +5,12 @@ import { Dispatch, SetStateAction } from "react";
 
 export const CountryForm = (props: {
   setIsInFrance: Dispatch<SetStateAction<boolean | undefined>>;
+  btnsAreLoading: boolean;
 }) => {
   return (
     <>
       <FormButton
+        loading={props.btnsAreLoading}
         id="isInFrance"
         onClick={() => props.setIsInFrance(true)}
         text="En France"
@@ -19,6 +21,7 @@ export const CountryForm = (props: {
         }}
       />
       <FormButton
+        loading={props.btnsAreLoading}
         id="isInFrance"
         onClick={() => props.setIsInFrance(false)}
         text="A l'étranger"

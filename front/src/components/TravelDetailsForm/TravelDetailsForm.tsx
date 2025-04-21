@@ -11,6 +11,7 @@ export const TravelDetailsForm = (props: {
   setTravelDetails: React.Dispatch<React.SetStateAction<string[]>>;
   travelDetails: string[];
   criterionsWithMatchingDestinations: CriterionsWithMatchingDestinationsType;
+  btnsAreLoading: boolean;
 }) => {
   const maxDetailsCriterionAndElementClicked = (id: string) => {
     return props.travelDetails.length > 1 && !props.travelDetails.includes(id);
@@ -39,6 +40,7 @@ export const TravelDetailsForm = (props: {
     <>
       <FormButton
         id="hasParty"
+        loading={props.btnsAreLoading}
         disabled={btnIsDisabled("hasParty")}
         isClicked={isClicked("hasParty")}
         text="Une ville où faire la fête"
@@ -51,6 +53,7 @@ export const TravelDetailsForm = (props: {
       />
       <FormButton
         id="isHistoricPlace"
+        loading={props.btnsAreLoading}
         text="Une ville historique à visiter"
         onClick={() => addOrRemoveElement("isHistoricPlace")}
         icon={{
@@ -63,6 +66,7 @@ export const TravelDetailsForm = (props: {
       />
       <FormButton
         id="hasAccessToSea"
+        loading={props.btnsAreLoading}
         disabled={btnIsDisabled("hasAccessToSea")}
         isClicked={isClicked("hasAccessToSea")}
         text="Une proximité avec la mer"
@@ -75,6 +79,7 @@ export const TravelDetailsForm = (props: {
       />
       <FormButton
         id="hasAccessToMountain"
+        loading={props.btnsAreLoading}
         disabled={btnIsDisabled("hasAccessToMountain")}
         isClicked={isClicked("hasAccessToMountain")}
         text="Un lieu près de la montagne"
@@ -87,6 +92,7 @@ export const TravelDetailsForm = (props: {
       />
       <FormButton
         id="hasAccessToLake"
+        loading={props.btnsAreLoading}
         text="Une proximité avec un lac"
         icon={{
           src: lakeIcon,
@@ -99,6 +105,7 @@ export const TravelDetailsForm = (props: {
       />
       <FormButton
         id="isWineRegion"
+        loading={props.btnsAreLoading}
         disabled={btnIsDisabled("isWineRegion")}
         isClicked={isClicked("isWineRegion")}
         text="Une région viticole"

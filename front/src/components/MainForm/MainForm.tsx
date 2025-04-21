@@ -24,6 +24,7 @@ export const MainForm = (props: {
   const [travelSeason, setTravelSeason] = useState<SeasonType>();
   const [travelDetails, setTravelDetails] = useState<string[]>([]);
   const validateMessageDiv = useRef<HTMLDivElement | null>(null);
+  const [btnsAreLoading, setBtnsAreLoading] = useState(false);
   const [
     criterionsWithMatchingDestinations,
     setCriterionsWithMatchingDestinations,
@@ -41,6 +42,8 @@ export const MainForm = (props: {
   });
 
   const handleSetCriterionWithMatchingDestination = async () => {
+    setBtnsAreLoading(true);
+
     const res = await getCriterionWithMatchingDestinationApiCall({
       isInFrance,
       travelSeason,
@@ -48,6 +51,7 @@ export const MainForm = (props: {
     });
 
     setCriterionsWithMatchingDestinations(res.data);
+    setBtnsAreLoading(false);
   };
 
   const handleBackArrowAction = () => {
@@ -62,6 +66,10 @@ export const MainForm = (props: {
   };
 
   useEffect(() => {
+    console.log(btnsAreLoading, "btnsAreLoading");
+  }, [btnsAreLoading]);
+
+  useEffect(() => {
     handleSetCriterionWithMatchingDestination();
   }, [isInFrance, travelSeason, travelDetails]);
 
@@ -72,6 +80,8 @@ export const MainForm = (props: {
   }, [travelDetails.length]);
 
   const getDestinationFromCriterion = async () => {
+    setBtnsAreLoading(true);
+
     if (isInFrance !== undefined && travelSeason && travelDetails) {
       const res = await getDestinationFromCriterionApiCall({
         isInFrance,
@@ -83,6 +93,7 @@ export const MainForm = (props: {
         props.setDestinationResult(res.data);
       }
     }
+    setBtnsAreLoading(false);
   };
 
   return (
@@ -103,13 +114,17 @@ export const MainForm = (props: {
       </div>
       <div className={styles.buttonsContainer}>
         {isInFrance === undefined ? (
-          <CountryForm setIsInFrance={setIsInFrance} />
+          <CountryForm
+            setIsInFrance={setIsInFrance}
+            btnsAreLoading={btnsAreLoading}
+          />
         ) : travelSeason === undefined ? (
           <SeasonForm
             setTravelSeason={setTravelSeason}
             criterionsWithMatchingDestinations={
               criterionsWithMatchingDestinations
             }
+            btnsAreLoading={btnsAreLoading}
           />
         ) : (
           <TravelDetailsForm
@@ -118,6 +133,7 @@ export const MainForm = (props: {
             criterionsWithMatchingDestinations={
               criterionsWithMatchingDestinations
             }
+            btnsAreLoading={btnsAreLoading}
           />
         )}
       </div>
