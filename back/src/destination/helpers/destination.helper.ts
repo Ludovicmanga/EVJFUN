@@ -38,48 +38,43 @@ export const getDestinationQuery = function(isInFrance: boolean, travelSeason: S
 
 export const extractCriterionsWithMatchingDestinations = (destinations: Prisma.DestinationWhereInput[]) => {
     const result = {
-        season: {
-            summer: false,
-            autumn: false,
-            winter: false,
-            spring: false,
-            flex: false,
-        },
-        travelDetails: {
-            hasParty: false,
-            hasAccessToSea: false,
-            isHistoricPlace: false,
-            hasAccessToMountain: false,
-            hasAccessToLake: false,
-            isWineRegion: false,
-        },
+        summer: false,
+        autumn: false,
+        winter: false,
+        spring: false,
+        hasParty: false,
+        hasAccessToSea: false,
+        isHistoricPlace: false,
+        hasAccessToMountain: false,
+        hasAccessToLake: false,
+        isWineRegion: false,
     };
 
     destinations.forEach(destination => {
         if (destination.firstPrivilegedSeason) {
-            result.season[destination.firstPrivilegedSeason as string] = true;
+            result[destination.firstPrivilegedSeason as string] = true;
         }
         if (destination.secondPrivilegedSeason) {
-            result.season[destination.secondPrivilegedSeason as string] = true;
+            result[destination.secondPrivilegedSeason as string] = true;
         }
 
         if (destination.hasParty) {
-            result.travelDetails.hasParty = true;
+            result.hasParty = true;
         }
         if (destination.hasAccessToSea) {
-            result.travelDetails.hasAccessToSea = true;
+            result.hasAccessToSea = true;
         }
         if (destination.isHistoricPlace) {
-            result.travelDetails.isHistoricPlace = true;
+            result.isHistoricPlace = true;
         }
         if (destination.hasAccessToMountain) {
-            result.travelDetails.hasAccessToMountain = true;
+            result.hasAccessToMountain = true;
         }
         if (destination.hasAccessToLake) {
-            result.travelDetails.hasAccessToLake = true;
+            result.hasAccessToLake = true;
         }
         if (destination.isWineRegion) {
-            result.travelDetails.isWineRegion = true;
+            result.isWineRegion = true;
         }
     });
 

@@ -4,7 +4,10 @@ import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
 import { Fab } from "@mui/material";
-import { SeasonType } from "@/types/types";
+import {
+  CriterionsWithMatchingDestinationsType,
+  SeasonType,
+} from "@/types/types";
 import {
   getCriterionWithMatchingDestinationApiCall,
   getDestinationFromCriterionApiCall,
@@ -20,19 +23,35 @@ export const MainForm = (props: {
   const [isInFrance, setIsInFrance] = useState<boolean>();
   const [travelSeason, setTravelSeason] = useState<SeasonType>();
   const [travelDetails, setTravelDetails] = useState<string[]>([]);
-
   const validateMessageDiv = useRef<HTMLDivElement | null>(null);
+  const [
+    criterionsWithMatchingDestinations,
+    setCriterionsWithMatchingDestinations,
+  ] = useState<CriterionsWithMatchingDestinationsType>({
+    summer: false,
+    autumn: false,
+    winter: false,
+    spring: false,
+    hasParty: false,
+    hasAccessToSea: false,
+    isHistoricPlace: false,
+    hasAccessToMountain: false,
+    hasAccessToLake: false,
+    isWineRegion: false,
+  });
 
-  const handleGetCriterionWithMatchingDestination = async () => {
+  const handleSetCriterionWithMatchingDestination = async () => {
     const res = await getCriterionWithMatchingDestinationApiCall({
       isInFrance,
       travelSeason,
       travelDetails,
     });
+
+    setCriterionsWithMatchingDestinations(res.data);
   };
 
   useEffect(() => {
-    handleGetCriterionWithMatchingDestination();
+    handleSetCriterionWithMatchingDestination();
   }, [isInFrance, travelSeason, travelDetails]);
 
   useEffect(() => {
@@ -68,11 +87,19 @@ export const MainForm = (props: {
         {isInFrance === undefined ? (
           <CountryForm setIsInFrance={setIsInFrance} />
         ) : travelSeason === undefined ? (
-          <SeasonForm setTravelSeason={setTravelSeason} />
+          <SeasonForm
+            setTravelSeason={setTravelSeason}
+            criterionsWithMatchingDestinations={
+              criterionsWithMatchingDestinations
+            }
+          />
         ) : (
           <TravelDetailsForm
             travelDetails={travelDetails}
             setTravelDetails={setTravelDetails}
+            criterionsWithMatchingDestinations={
+              criterionsWithMatchingDestinations
+            }
           />
         )}
       </div>

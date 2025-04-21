@@ -79,35 +79,52 @@ export class DestinationService {
           [detail]: true,
       }));
   
-      if (travelDetails.length > 0 && travelSeason) {
-          destinations = await this.prisma.destination.findMany({
-              where: {
-                  isInFrance,
-                  OR: [
-                      { firstPrivilegedSeason: travelSeason },
-                      { secondPrivilegedSeason: travelSeason },
-                  ],
-                  AND: travelDetailsConditions,
-              },
-          });
-      } else if (travelSeason) {
-          destinations = await this.prisma.destination.findMany({
-              where: {
-                  isInFrance,
-                  OR: [
-                      { firstPrivilegedSeason: travelSeason },
-                      { secondPrivilegedSeason: travelSeason },
-                  ],
-              },
-          });
+      if (travelSeason === "flex") {
+          if (travelDetails.length > 0) {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                      AND: travelDetailsConditions,
+                  },
+              });
+          } else {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                  },
+              });
+          }
       } else {
-          destinations = await this.prisma.destination.findMany({
-              where: {
-                  isInFrance,
-              },
-          });
+          if (travelDetails.length > 0 && travelSeason) {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                      OR: [
+                          { firstPrivilegedSeason: travelSeason },
+                          { secondPrivilegedSeason: travelSeason },
+                      ],
+                      AND: travelDetailsConditions,
+                  },
+              });
+          } else if (travelSeason) {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                      OR: [
+                          { firstPrivilegedSeason: travelSeason },
+                          { secondPrivilegedSeason: travelSeason },
+                      ],
+                  },
+              });
+          } else {
+              destinations = await this.prisma.destination.findMany({
+                  where: {
+                      isInFrance,
+                  },
+              });
+          }
       }
-    
+  
       return destinations;
   }
 }
