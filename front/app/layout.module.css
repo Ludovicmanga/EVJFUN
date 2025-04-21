@@ -10,7 +10,6 @@
   flex-direction: column;
   padding: 1rem 0 0 0;
   width: 100%;
-  position: relative;
 }
 
 .cocoImg {
@@ -20,12 +19,5 @@
 @media screen and (min-width: 40rem) {
   .contentContainer {
     width: 50%;
-  }
-
-  .cocoImg {
-    display: block;
-    position: absolute;
-    bottom: 2rem;
-    right: 1rem;
   }
 }

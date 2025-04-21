@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
-import { Fab, IconButton } from "@mui/material";
+import { Fab, IconButton, Typography } from "@mui/material";
 import {
   CriterionsWithMatchingDestinationsType,
   SeasonType,
@@ -124,20 +124,35 @@ export const MainForm = (props: {
       {travelDetails.length > 0 && (
         <div ref={validateMessageDiv}>
           <Fab
-            variant="extended"
             color="primary"
+            variant="extended"
             onClick={getDestinationFromCriterion}
             sx={{
               mt: 4,
               mb: 2,
-              background: "#F79D6F",
+              background: tinycolor("#F79D6F").darken(5).toString(),
               ":hover": {
-                background: tinycolor("#F79D6F").darken(5).toString(),
+                background: tinycolor("#F79D6F").darken(10).toString(),
               },
             }}
           >
-            <AutoAwesome sx={{ mr: 1 }} />
-            Valider ma recherche
+            <AutoAwesome sx={{ mr: 2, color: "white" }} />
+            <Typography
+              textTransform={"uppercase"}
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              V
+            </Typography>
+            <Typography
+              textTransform={"lowercase"}
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              alider recherche
+            </Typography>
           </Fab>
         </div>
       )}

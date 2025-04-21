@@ -1,18 +1,15 @@
 "use client";
 import styles from "./ResultDisplay.module.css";
 import cocoHappy from "../../../public/happy_coco.webp";
-import cocoSad from "../../../public/sad_coco.webp";
 import Image from "next/image";
-import { Button, Divider } from "@mui/material";
-import cocoImg from "../../../public/coco.png";
+import { Divider, Fab, Typography } from "@mui/material";
+import searchImg from "../../../public/search.png";
 import eyesImg from "../../../public/eyes.png";
-import refreshImg from "../../../public/refresh.png";
-import { useRouter } from "next/navigation";
-import { MouseEvent, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { goToHomePage } from "@/src/utils/utils";
+import tinycolor from "tinycolor2";
 
 export default function ResultDisplay(props: { destinationName: string }) {
-  const aDestinationWasFound = props.destinationName !== "NO_DESTINATION_FOUND";
   const btnRefToDisplayRef = useRef<HTMLButtonElement | null>(null);
 
   const handleScrollToBottom = () => {
@@ -34,52 +31,95 @@ export default function ResultDisplay(props: { destinationName: string }) {
 
   return (
     <div>
-      <h1 className={styles.mainMessage}>
-        {aDestinationWasFound
-          ? "Coco te conseille de partir à..."
-          : "Aucune destination avec ces critères..."}
-      </h1>
-      {aDestinationWasFound && (
-        <div className={styles.destinationNameContainer}>
-          <div className={styles.destinationName}>{props.destinationName}</div>
-        </div>
-      )}
+      <h1 className={styles.mainMessage}>Coco te conseille de partir à...</h1>
+      <div className={styles.destinationNameContainer}>
+        <div className={styles.destinationName}>{props.destinationName}</div>
+      </div>
       <div className={styles.imgContainer}>
-        <Image
-          height={400}
-          alt="coco_happy"
-          src={aDestinationWasFound ? cocoHappy : cocoSad}
-        />
+        <Image height={400} alt="coco_happy" src={cocoHappy} />
       </div>
-      <div className={styles.submitBtnContainer}>
-        <Button
-          onClick={aDestinationWasFound ? handleGoToGuidePage : goToHomePage}
-          startIcon={<Image alt="test" src={eyesImg} height={30}></Image>}
-          variant="contained"
-          sx={{
-            background: "#DE8D63",
-          }}
-          ref={btnRefToDisplayRef}
-        >
-          {aDestinationWasFound
-            ? `Voir notre guide pour cette ville`
-            : "Faire une nouvelle recherche"}
-        </Button>
-      </div>
-      <Divider variant="fullWidth">ou</Divider>
-
-      <div className={styles.submitBtnContainer}>
-        <Button
-          onClick={goToHomePage}
-          startIcon={<Image alt="test" src={refreshImg} height={30}></Image>}
-          variant="contained"
-          sx={{
-            background: "#DE8D63",
-          }}
-          ref={btnRefToDisplayRef}
-        >
-          Faire une nouvelle recherche
-        </Button>
+      <div className={styles.btnsContainer}>
+        <div className={styles.submitBtnContainer}>
+          <Fab
+            variant="extended"
+            size="large"
+            sx={{
+              background: tinycolor("#F79D6F").darken(5).toString(),
+              ":hover": {
+                background: tinycolor("#F79D6F").darken(10).toString(),
+              },
+            }}
+            ref={btnRefToDisplayRef}
+            onClick={handleGoToGuidePage}
+            color="primary"
+          >
+            <Image
+              src={eyesImg}
+              alt="Logo"
+              height={20}
+              style={{
+                marginRight: "0.8rem",
+              }}
+            />
+            <Typography
+              textTransform={"uppercase"}
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              V
+            </Typography>
+            <Typography
+              textTransform={"lowercase"}
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              oir notre guide
+            </Typography>
+          </Fab>
+        </div>
+        <Divider variant="fullWidth">ou</Divider>
+        <div className={styles.submitBtnContainer}>
+          <Fab
+            variant="extended"
+            size="large"
+            sx={{
+              background: tinycolor("#F79D6F").darken(5).toString(),
+              ":hover": {
+                background: tinycolor("#F79D6F").darken(10).toString(),
+              },
+            }}
+            ref={btnRefToDisplayRef}
+            onClick={goToHomePage}
+            color="primary"
+          >
+            <Image
+              src={searchImg}
+              alt="Logo"
+              height={20}
+              style={{
+                marginRight: "0.8rem",
+              }}
+            />
+            <Typography
+              textTransform={"uppercase"}
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              N
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+              }}
+              textTransform={"lowercase"}
+            >
+              ouvelle recherche
+            </Typography>
+          </Fab>
+        </div>
       </div>
     </div>
   );
