@@ -6,7 +6,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['http://localhost:3000', 'https://evjfun.vercel.app'],
+    origin: ['http://localhost:3000', 'https://evjfun.vercel.app', 'https://evjfun.fr', 'https://www.evjfun.fr'],
     credentials: true
   });
   await app.listen(PORT);

@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { SeasonType } from "src/types/types";
 
 export const getDestinationQuery = function(isInFrance: boolean, travelSeason: SeasonType, travelDetails: string[] ) {
