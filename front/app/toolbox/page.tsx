@@ -48,10 +48,10 @@ const accordionItems = [
     icon: "📚",
     label: "Liens & ressources utiles",
     items: [
-      <a href="#">📄 Modèle d’invitation EVJF</a>,
-      <a href="#">🧾 Checklist imprimable</a>,
-      <a href="#">📦 Box EVJF personnalisée</a>,
-      <a href="#">💡 Blog d'idées EVJF</a>,
+      { label: "📄 Modèle d’invitation EVJF", href: "#" },
+      { label: "🧾 Checklist imprimable", href: "#" },
+      { label: "📦 Box EVJF personnalisée", href: "#" },
+      { label: "💡 Blog d'idées EVJF", href: "#" },
     ],
   },
 ];
@@ -106,9 +106,11 @@ export default function Toolbox() {
                       marginBottom: "0.5rem",
                     }}
                   >
-                    {React.isValidElement(item)
-                      ? React.cloneElement(item, { key: i })
-                      : item}
+                    {typeof item === "string" ? (
+                      item
+                    ) : (
+                      <a href={item.href}>{item.label}</a>
+                    )}
                   </li>
                 ))}
               </ul>
