@@ -2,7 +2,7 @@
 import styles from "./ResultDisplay.module.css";
 import cocoHappy from "../../../public/happy_coco.webp";
 import Image from "next/image";
-import { Divider, Fab, Typography } from "@mui/material";
+import { Card, Divider, Fab, Typography } from "@mui/material";
 import searchImg from "../../../public/search.png";
 import eyesImg from "../../../public/eyes.png";
 import { useEffect, useRef } from "react";

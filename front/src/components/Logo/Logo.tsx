@@ -9,7 +9,7 @@ export default function Logo() {
   return (
     <Image
       className={styles.logo}
-      height={250}
+      height={120}
       alt="logo"
       src={logo}
       onClick={goToHomePage}

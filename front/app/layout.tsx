@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Image from "next/image";
 import styles from "./layout.module.css";
-import { Paper, useMediaQuery } from "@mui/material";
-import tinycolor from "tinycolor2";
-import Logo from "@/src/components/Logo/Logo";
-import Sidebar from "@/src/components/Sidebar/Sidebar";
+import Navbar from "@/src/components/Navbar/Navbar";
 
 const poppins = Poppins({
-  weight: "400",
+  weight: ["400", "600", "700"], // on ajoute les poids nécessaires
   subsets: ["latin"],
   preload: true,
 });
@@ -27,26 +23,12 @@ export default function RootLayout({
   return (
     <html>
       <body className={poppins.className}>
+        <div className={styles.background}></div>
         <div className={styles.container}>
-          <Paper
-            sx={{
-              background: tinycolor("DE8D63").lighten(7).toString(),
-              margin: "1rem",
-            }}
-            className={styles.contentContainer}
-          >
-            <div
-              style={{
-                position: "absolute",
-                top: 18,
-                left: 13,
-              }}
-            >
-              <Sidebar />
-            </div>
-            <Logo />
-            {children}
-          </Paper>
+          <Navbar />
+          <div className={styles.contentContainer}>
+            <div className={styles.content}>{children}</div>
+          </div>
         </div>
       </body>
     </html>

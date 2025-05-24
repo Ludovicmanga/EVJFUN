@@ -1,23 +1,33 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("../public/EVJF_background.png") no-repeat top center;
+  background-size: cover;
+  z-index: -1;
+  pointer-events: none;
+
+  filter: blur(2px); /* ajuste la valeur selon l’effet désiré */
+  transform: scale(1.05); /* évite que les bords floutés créent un vide */
+}
+
 .container {
-  display: flex;
-  justify-content: center;
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
+  padding-bottom: 60px;
+  color: white;
+  font-family: "Poppins", sans-serif;
 }
 
 .contentContainer {
   display: flex;
   align-items: center;
-  flex-direction: column;
-  padding: 1rem 0 0 0;
-  width: 100%;
+  justify-content: center;
 }
 
-.cocoImg {
-  display: none;
-}
-
-@media screen and (min-width: 40rem) {
-  .contentContainer {
-    width: 50%;
-  }
+.content {
+  width: 70%;
 }
