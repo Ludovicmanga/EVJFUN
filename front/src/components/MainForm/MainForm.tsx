@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CountryForm } from "../CountryForm/CountryForm";
 import { SeasonForm } from "../SeasonForm/SeasonForm";
 import { TravelDetailsForm } from "../TravelDetailsForm/TravelDetailsForm";
-import { Fab, IconButton, Typography } from "@mui/material";
+import { Card, Fab, IconButton, Paper, Typography } from "@mui/material";
 import {
   CriterionsWithMatchingDestinationsType,
   SeasonType,
@@ -66,10 +66,6 @@ export const MainForm = (props: {
   };
 
   useEffect(() => {
-    console.log(btnsAreLoading, "btnsAreLoading");
-  }, [btnsAreLoading]);
-
-  useEffect(() => {
     handleSetCriterionWithMatchingDestination();
   }, [isInFrance, travelSeason, travelDetails]);
 
@@ -97,7 +93,7 @@ export const MainForm = (props: {
   };
 
   return (
-    <div className={styles.container}>
+    <div>
       <div className={styles.titleContainer}>
         <div className={styles.backButtonContainer}>
           <IconButton onClick={handleBackArrowAction}>

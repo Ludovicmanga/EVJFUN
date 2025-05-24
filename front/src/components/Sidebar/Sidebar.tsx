@@ -7,17 +7,16 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Skeleton,
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import magicIcon from "../../../public/magic-wand.png";
 import groupIcon from "../../../public/group.png";
 import toolBoxIcon from "../../../public/tool-box.png";
-import cocoImg from "../../../public/coco.png";
+import cocoImg from "../../../public/logo.png";
 import styles from "./Sidebar.module.css";
 import Image from "next/image";
-import { goToHomePage } from "@/src/utils/utils";
+import { goToHomePage, goToToolboxPage } from "@/src/utils/utils";
 import { useState, useEffect } from "react";
 import DrawerSkeleton from "../DrawerSkeleton/DrawerSkeleton";
 import EcologicalInfo from "../EcologicalInfo/EcologicalInfo";
@@ -36,7 +35,7 @@ export default function Sidebar() {
     {
       icon: <Image src={toolBoxIcon} alt="Logo" height={20} />,
       text: "Ma boîte à outils EVJF",
-      action: goToHomePage,
+      action: goToToolboxPage,
     },
     {
       icon: <Image src={groupIcon} alt="Logo" height={20} />,
@@ -108,7 +107,7 @@ export default function Sidebar() {
                   ))}
                 </List>
               </div>
-              <div className={styles.sidebarBottomContent}>
+              <div>
                 <EcologicalInfo />
               </div>
             </div>

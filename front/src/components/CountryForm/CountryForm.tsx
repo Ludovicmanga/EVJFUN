@@ -1,6 +1,6 @@
 import FormButton from "../FormButton/FormButton";
 import frenchFlag from "../../../public/french_flag.png";
-import abroadIcon from "../../../public/airplane.png";
+import abroadIcon from "../../../public/earth.png";
 import { Dispatch, SetStateAction } from "react";
 
 export const CountryForm = (props: {

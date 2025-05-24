@@ -1,16 +1,19 @@
-.container {
+.floating {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
   display: flex;
-  margin: 0 0 1.5rem 0;
-}
-
-.iconContainer {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  background-color: rgba(240, 253, 244, 0.9); /* vert pâle avec transparence */
+  color: #4b5563; /* gris pro */
+  font-size: 0.7rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  gap: 0.5rem;
+  z-index: 999;
 }
 
 .text {
-  font-size: 0.8rem;
-  font-style: italic;
-  margin: 0 0 0 1.5rem;
+  line-height: 1.3;
 }
