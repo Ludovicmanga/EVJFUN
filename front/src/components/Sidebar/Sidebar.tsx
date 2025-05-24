@@ -62,7 +62,7 @@ export default function Sidebar() {
             </IconButton>
           </div>
           <Drawer
-            variant={isBigScreen ? "permanent" : "temporary"}
+            variant="temporary"
             anchor="left"
             open={isOpen}
             onClose={() => setIsOpen(false)}
@@ -72,7 +72,7 @@ export default function Sidebar() {
           >
             <div
               style={{
-                width: 310,
+                width: 250,
                 height: "100%",
                 background: tinycolor("DE8D63").lighten(7).toString(),
                 padding: "2rem 16px",
@@ -82,15 +82,6 @@ export default function Sidebar() {
               }}
             >
               <div className={styles.sidebarTopContent}>
-                <div className={styles.logoContainer}>
-                  <Image
-                    alt="coco"
-                    src={cocoImg}
-                    height={130}
-                    className={styles.cocoImg}
-                    onClick={goToHomePage}
-                  />
-                </div>
                 <List>
                   {menuItems.map((item) => (
                     <ListItem
@@ -100,7 +91,6 @@ export default function Sidebar() {
                       onClick={item.action}
                     >
                       <ListItemButton>
-                        <div className={styles.iconContainer}>{item.icon}</div>
                         <ListItemText primary={item.text} />
                       </ListItemButton>
                     </ListItem>

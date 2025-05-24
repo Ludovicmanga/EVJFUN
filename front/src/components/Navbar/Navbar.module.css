@@ -1,5 +1,5 @@
-.header {
-  margin-bottom: 3rem;
+.container {
+  display: none;
 }
 
 .nav {
@@ -31,4 +31,10 @@
   color: #1f2937; /* gris foncé professionnel */
   border-color: white;
   transform: translateY(-1px); /* petit effet de "relief" */
+}
+
+@media screen and (min-width: 40rem) {
+  .container {
+    display: block;
+  }
 }

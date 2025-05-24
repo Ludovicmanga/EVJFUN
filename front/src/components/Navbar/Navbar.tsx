@@ -4,7 +4,7 @@ import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   return (
-    <header className={styles.header}>
+    <header className={styles.container}>
       <nav className={styles.nav}>
         <div className={styles.navLinks}>
           <div className={styles.navLink} onClick={goToHomePage}>

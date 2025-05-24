@@ -106,7 +106,9 @@ export default function Toolbox() {
                       marginBottom: "0.5rem",
                     }}
                   >
-                    {item}
+                    {React.isValidElement(item)
+                      ? React.cloneElement(item, { key: i })
+                      : item}
                   </li>
                 ))}
               </ul>
